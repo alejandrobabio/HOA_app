@@ -17,6 +17,7 @@ class Hangout
     $('#main').append "<p>change status: #{@status}</p>"
 
   send_interval: ->
+    console.log @gapi.hangout.onair
     $('#main').append '<p>10 sec</p>'
 
 $ ->

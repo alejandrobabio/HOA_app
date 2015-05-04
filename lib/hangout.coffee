@@ -18,6 +18,7 @@ class Hangout
 
   send_interval: ->
     console.log @gapi.hangout.onair
+    console.log @gapi.hangout.onair.isBroadcasting()
     $('#main').append '<p>10 sec</p>'
 
 $ ->

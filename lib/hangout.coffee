@@ -15,6 +15,43 @@ class Hangout
 
   notify: =>
     $('#main').append "<p>change status: #{@status}</p>"
+    startData = JSON.parse @gapi.hangout.getStartData()
+
+    console.log startData
+
+    callbackUrl = startData.callbackUrl + startData.hangoutId
+
+    hangoutUrl = @gapi.hangout.getHangoutUrl()
+    youTubeLiveId = @gapi.hangout.onair.getYouTubeLiveId()
+    participants = @gapi.hangout.getParticipants()
+    isBroadcasting = @gapi.hangout.onair.isBroadcasting()
+
+    $.ajax {
+      url: callbackUrl,
+      dataType: 'text',
+      type: 'PUT',
+      data:
+        title: startData.title,
+        project_id: startData.projectId,
+        event_id: startData.eventId,
+        category: startData.category,
+        host_id: startData.hostId,
+        participants: participants,
+        hangout_url: hangoutUrl,
+        yt_video_id: youTubeLiveId,
+        status: @status,
+        notify: true
+      success: ->
+        @gapi.hangout.data.setValue('status', 'ok')
+        $('#main').append "<p>ajax return: success</p>"
+
+        if @gapi.hangout.data.getValue('updated') != 'true'
+          @gapi.hangout.layout.displayNotice 'Connection to WebsiteOne established'
+          @gapi.hangout.data.setValue 'updated', 'true'
+      error: ->
+        @gapi.hangout.data.setValue 'status', 'error'
+        $('#main').append "<p>ajax return: error</p>"
+      }
 
   send_interval: ->
     console.log @gapi.hangout.onair

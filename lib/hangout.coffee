@@ -7,6 +7,8 @@ class Hangout
     @notify()
 
   changeStatus: (e) ->
+    console.log "Status: #{@status}"
+
     prev_status = @status
     if e.isBroadcasting
       @status = 'broadcasting' if @status is 'started'
@@ -16,7 +18,7 @@ class Hangout
       $('#main').append "<p>change status: #{@status}</p>"
       @notify()
 
-  notify: ->
+  notify: =>
     startData = JSON.parse @gapi.hangout.getStartData()
 
     console.log startData

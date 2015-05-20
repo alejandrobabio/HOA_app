@@ -3,24 +3,23 @@ class Hangout
     @status = 'started'
     @gapi.hangout.onApiReady.add =>
       @gapi.hangout.onair.onBroadcastingChanged.add @changeStatus
-    setInterval @send_interval, 10000
+    setInterval @send_interval, 120000
+    @notify()
 
-  changeStatus: (e) =>
+  changeStatus: (e) ->
     prev_status = @status
     if e.isBroadcasting
       @status = 'broadcasting' if @status is 'started'
     else
       @status = 'finished' if @status is 'broadcasting'
-    @notify() if prev_status isnt @status
+    if prev_status isnt @status
+      $('#main').append "<p>change status: #{@status}</p>"
+      @notify()
 
-  notify: =>
-    $('#main').append "<p>change status: #{@status}</p>"
+  notify: ->
     startData = JSON.parse @gapi.hangout.getStartData()
 
-    console.log startData
-
     callbackUrl = startData.callbackUrl + startData.hangoutId
-
     hangoutUrl = @gapi.hangout.getHangoutUrl()
     youTubeLiveId = @gapi.hangout.onair.getYouTubeLiveId()
     participants = @gapi.hangout.getParticipants()
@@ -39,9 +38,10 @@ class Hangout
         participants: participants,
         hangout_url: hangoutUrl,
         yt_video_id: youTubeLiveId,
-        status: @status,
+        hoa_status: @status,
         notify: true
       success: ->
+        console.log 'ajax.success'
         @gapi.hangout.data.setValue('status', 'ok')
         $('#main').append "<p>ajax return: success</p>"
 
@@ -49,14 +49,14 @@ class Hangout
           @gapi.hangout.layout.displayNotice 'Connection to WebsiteOne established'
           @gapi.hangout.data.setValue 'updated', 'true'
       error: ->
+        console.log 'ajax.error'
         @gapi.hangout.data.setValue 'status', 'error'
         $('#main').append "<p>ajax return: error</p>"
       }
 
   send_interval: ->
-    console.log @gapi.hangout.onair
-    console.log @gapi.hangout.onair.isBroadcasting()
-    $('#main').append "<p>10 sec, Broadcasting: #{@gapi.hangout.onair.isBroadcasting()}</p>"
+    $('#main').append "<p>2 minutes, Broadcasting: #{@gapi.hangout.onair.isBroadcasting()}</p>"
+    @notify()
 
 $ ->
   gadgets.util.registerOnLoadHandler(new Hangout(gapi))

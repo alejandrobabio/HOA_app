@@ -3,7 +3,7 @@ class Hangout
     @status = 'started'
     @gapi.hangout.onApiReady.add =>
       @gapi.hangout.onair.onBroadcastingChanged.add @changeStatus
-    setInterval @send_interval, 120000
+    setInterval @send_interval, 10000
     @notify()
 
   changeStatus: (e) ->
@@ -18,6 +18,8 @@ class Hangout
 
   notify: ->
     startData = JSON.parse @gapi.hangout.getStartData()
+
+    console.log startData
 
     callbackUrl = startData.callbackUrl + startData.hangoutId
     hangoutUrl = @gapi.hangout.getHangoutUrl()

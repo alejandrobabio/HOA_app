@@ -69,7 +69,7 @@
         };
       })(this));
       setInterval(this.send_interval, 120000);
-      this.notify();
+      this.notify;
     }
 
     Hangout.prototype.changeStatus = function(e) {
@@ -86,7 +86,7 @@
       }
       if (prev_status !== this.status) {
         $('#main').append("<p>change status: " + this.status + "</p>");
-        return this.notify();
+        return this.notify;
       }
     };
 
@@ -133,7 +133,7 @@
 
     Hangout.prototype.send_interval = function() {
       $('#main').append("<p>2 minutes, Broadcasting: " + (this.gapi.hangout.onair.isBroadcasting()) + "</p>");
-      return this.notify();
+      return this.notify;
     };
 
     return Hangout;

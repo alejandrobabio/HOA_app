@@ -4,7 +4,7 @@ class Hangout
     @gapi.hangout.onApiReady.add =>
       @gapi.hangout.onair.onBroadcastingChanged.add @changeStatus
     setInterval @send_interval, 120000
-    @notify()
+    @notify
 
   changeStatus: (e) ->
     prev_status = @status
@@ -14,7 +14,7 @@ class Hangout
       @status = 'finished' if @status is 'broadcasting'
     if prev_status isnt @status
       $('#main').append "<p>change status: #{@status}</p>"
-      @notify()
+      @notify
 
   notify: ->
     startData = JSON.parse @gapi.hangout.getStartData()
@@ -56,7 +56,7 @@ class Hangout
 
   send_interval: ->
     $('#main').append "<p>2 minutes, Broadcasting: #{@gapi.hangout.onair.isBroadcasting()}</p>"
-    @notify()
+    @notify
 
 $ ->
   gadgets.util.registerOnLoadHandler(new Hangout(gapi))

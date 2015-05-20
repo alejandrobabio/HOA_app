@@ -22,6 +22,7 @@ class Hangout
     startData = JSON.parse @gapi.hangout.getStartData()
 
     console.log startData
+    return unless startData
 
     callbackUrl = startData.callbackUrl + startData.hangoutId
     hangoutUrl = @gapi.hangout.getHangoutUrl()
@@ -44,7 +45,7 @@ class Hangout
         yt_video_id: youTubeLiveId,
         hoa_status: @status,
         notify: true
-      success: ->
+      success: =>
         console.log 'ajax.success'
         @gapi.hangout.data.setValue('status', 'ok')
         $('#main').append "<p>ajax return: success</p>"
@@ -52,7 +53,7 @@ class Hangout
         if @gapi.hangout.data.getValue('updated') != 'true'
           @gapi.hangout.layout.displayNotice 'Connection to WebsiteOne established'
           @gapi.hangout.data.setValue 'updated', 'true'
-      error: ->
+      error: =>
         console.log 'ajax.error'
         @gapi.hangout.data.setValue 'status', 'error'
         $('#main').append "<p>ajax return: error</p>"

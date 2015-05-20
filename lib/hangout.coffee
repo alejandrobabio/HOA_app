@@ -7,8 +7,6 @@ class Hangout
     setInterval (=> @send_interval()), 10000
 
   changeStatus: (e) =>
-    console.log "Status: #{@status}"
-
     prev_status = @status
     if e.isBroadcasting
       @status = 'broadcasting' if @status is 'started'
@@ -20,9 +18,6 @@ class Hangout
 
   notify: =>
     startData = JSON.parse @gapi.hangout.getStartData()
-
-    console.log startData
-    return unless startData
 
     callbackUrl = startData.callbackUrl + startData.hangoutId
     hangoutUrl = @gapi.hangout.getHangoutUrl()
@@ -46,7 +41,6 @@ class Hangout
         hoa_status: @status,
         notify: true
       success: =>
-        console.log 'ajax.success'
         @gapi.hangout.data.setValue('status', 'ok')
         $('#main').append "<p>ajax return: success</p>"
 
@@ -54,7 +48,6 @@ class Hangout
           @gapi.hangout.layout.displayNotice 'Connection to WebsiteOne established'
           @gapi.hangout.data.setValue 'updated', 'true'
       error: =>
-        console.log 'ajax.error'
         @gapi.hangout.data.setValue 'status', 'error'
         $('#main').append "<p>ajax return: error</p>"
       }

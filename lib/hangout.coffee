@@ -3,8 +3,8 @@ class Hangout
     @status = 'started'
     @gapi.hangout.onApiReady.add =>
       @gapi.hangout.onair.onBroadcastingChanged.add @changeStatus
+      @notify()
     setInterval (=> @send_interval()), 10000
-    @notify()
 
   changeStatus: (e) =>
     console.log "Status: #{@status}"

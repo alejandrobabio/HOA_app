@@ -69,7 +69,8 @@
       this.status = 'started';
       this.gapi.hangout.onApiReady.add((function(_this) {
         return function() {
-          return _this.gapi.hangout.onair.onBroadcastingChanged.add(_this.changeStatus);
+          _this.gapi.hangout.onair.onBroadcastingChanged.add(_this.changeStatus);
+          return _this.notify();
         };
       })(this));
       setInterval(((function(_this) {
@@ -77,7 +78,6 @@
           return _this.send_interval();
         };
       })(this)), 10000);
-      this.notify();
     }
 
     Hangout.prototype.changeStatus = function(e) {

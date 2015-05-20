@@ -72,7 +72,11 @@
           return _this.gapi.hangout.onair.onBroadcastingChanged.add(_this.changeStatus);
         };
       })(this));
-      setInterval(this.send_interval, 10000);
+      setInterval(((function(_this) {
+        return function() {
+          return _this.send_interval();
+        };
+      })(this)), 10000);
       this.notify();
     }
 

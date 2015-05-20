@@ -6,7 +6,7 @@ class Hangout
     setInterval @send_interval, 10000
     @notify()
 
-  changeStatus: (e) ->
+  changeStatus: (e) =>
     console.log "Status: #{@status}"
 
     prev_status = @status

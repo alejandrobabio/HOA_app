@@ -64,6 +64,7 @@
     function Hangout(gapi1) {
       this.gapi = gapi1;
       this.notify = bind(this.notify, this);
+      this.changeStatus = bind(this.changeStatus, this);
       this.status = 'started';
       this.gapi.hangout.onApiReady.add((function(_this) {
         return function() {

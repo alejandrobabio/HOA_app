@@ -63,6 +63,7 @@
   Hangout = (function() {
     function Hangout(gapi1) {
       this.gapi = gapi1;
+      this.send_interval = bind(this.send_interval, this);
       this.notify = bind(this.notify, this);
       this.changeStatus = bind(this.changeStatus, this);
       this.status = 'started';

@@ -58,7 +58,7 @@ class Hangout
         $('#main').append "<p>ajax return: error</p>"
       }
 
-  send_interval: ->
+  send_interval: =>
     $('#main').append "<p>2 minutes, Broadcasting: #{@gapi.hangout.onair.isBroadcasting()}</p>"
     @notify()
 

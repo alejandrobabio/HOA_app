@@ -73,11 +73,12 @@
           return _this.notify();
         };
       })(this));
-      setInterval(((function(_this) {
+      this.f_send_interval = (function(_this) {
         return function() {
           return _this.send_interval();
         };
-      })(this)), 10000);
+      })(this);
+      setInterval(this.f_send_interval, 10000);
     }
 
     Hangout.prototype.changeStatus = function(e) {
@@ -94,6 +95,9 @@
       }
       if (prev_status !== this.status) {
         $('#main').append("<p>change status: " + this.status + "</p>");
+        if (this.status === 'finished') {
+          clearInterval(this.f_send_interval);
+        }
         return this.notify();
       }
     };

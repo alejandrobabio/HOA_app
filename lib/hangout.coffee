@@ -4,7 +4,8 @@ class Hangout
     @gapi.hangout.onApiReady.add =>
       @gapi.hangout.onair.onBroadcastingChanged.add @changeStatus
       @notify()
-    setInterval (=> @send_interval()), 10000
+    @f_send_interval = => @send_interval()
+    setInterval @f_send_interval, 10000
 
   changeStatus: (e) =>
     prev_status = @status
@@ -14,6 +15,7 @@ class Hangout
       @status = 'finished' if @status is 'broadcasting'
     if prev_status isnt @status
       $('#main').append "<p>change status: #{@status}</p>"
+      clearInterval(@f_send_interval) if @status == 'finished'
       @notify()
 
   notify: =>

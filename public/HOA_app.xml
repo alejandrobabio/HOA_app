@@ -105,7 +105,7 @@
     Hangout.prototype.notify = function() {
       var callbackUrl, hangoutUrl, isBroadcasting, participants, startData, youTubeLiveId;
       startData = JSON.parse(this.gapi.hangout.getStartData());
-      callbackUrl = 'http' + startData.callbackUrl + startData.hangoutId;
+      callbackUrl = startData.callbackUrl + startData.hangoutId;
       hangoutUrl = this.gapi.hangout.getHangoutUrl();
       youTubeLiveId = this.gapi.hangout.onair.getYouTubeLiveId();
       participants = this.gapi.hangout.getParticipants();

@@ -21,7 +21,7 @@ class Hangout
   notify: =>
     startData = JSON.parse @gapi.hangout.getStartData()
 
-    callbackUrl = 'http' + startData.callbackUrl + startData.hangoutId
+    callbackUrl = startData.callbackUrl + startData.hangoutId
     hangoutUrl = @gapi.hangout.getHangoutUrl()
     youTubeLiveId = @gapi.hangout.onair.getYouTubeLiveId()
     participants = @gapi.hangout.getParticipants()
